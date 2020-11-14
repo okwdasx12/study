@@ -30,21 +30,21 @@ public class TCPServer {
         Scanner sc = new Scanner(System.in);
  
         try {
-            // 1. Server Socket 생성
+            // 1. Server Socket 생성 /////////소켓 생성
             serverSocket = new ServerSocket();
  
-            // 2. Binding : Socket에 SocketAddress(IpAddress + Port) 바인딩 함
+            // 2. Binding : Socket에 SocketAddress(IpAddress + Port) 바인딩 함 ///바인딩까지하고 클라이언트 커넥트 기다림
  
-            InetAddress inetAddress = InetAddress.getLocalHost();
-            String localhost = inetAddress.getHostAddress();
+            InetAddress inetAddress = InetAddress.getLocalHost(); // inetaddress 가  ip 정보를 가지고 있음
+            String localhost = inetAddress.getHostAddress();	//hot 주소를  locathost에 넣음
  
-            serverSocket.bind(new InetSocketAddress(localhost, PORT));
+            serverSocket.bind(new InetSocketAddress(localhost, PORT));	//ip랑 포트번호 들고 바인드 메소드 사용, 호출 
  
             System.out.println("[server] binding " + localhost);
  
             // 3. accept(클라이언트로 부터 연결요청을 기다림)
  
-            Socket socket = serverSocket.accept();
+            Socket socket = serverSocket.accept(); //클라이언트와 연결된 소켓 하나 생성
             InetSocketAddress socketAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
  
             System.out.println("[server] connected by client");
@@ -63,8 +63,8 @@ public class TCPServer {
                 pw = new PrintWriter(osw, true);
  
                 String buffer = null;
-                buffer = br.readLine(); // Blocking
-                if (buffer == null) {
+                buffer = br.readLine(); // Blocking  //버퍼 한줄씩 읽어서
+                if (buffer == null) {				//이제 없으면  반복문 탈출
   
                     // 정상종료 : remote socket close()
                     // 메소드를 통해서 정상적으로 소켓을 닫은 경우
@@ -73,7 +73,7 @@ public class TCPServer {
  
                 }
  
-                System.out.println("[server] recived : " + buffer);
+                System.out.println("[server] recived : " + buffer); //버퍼 한줄씩 보여줌
                 pw.println(buffer);
  
             }
